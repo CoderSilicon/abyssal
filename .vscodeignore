@@ -1,0 +1,15 @@
+# Files that are useful in the repo but should not ship in the .vsix
+.vscode/**
+.vscode-test/**
+node_modules
+*.vsix
+.env
+.gitignore
+.gitattributes
+vsc-extension-quickstart.md
+
+# Keep the 1254px source out of the .vsix; only the 128px icon ships.
+assets/ab.png
+
+# Not runtime code.
+tools/**
