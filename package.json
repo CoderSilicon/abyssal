@@ -3,10 +3,10 @@
   "displayName": "Abyssal",
   "description": "A deep-ocean dark color theme for Visual Studio Code. Near-black slate surfaces, muted desaturated syntax colors, and high-contrast accents for long sessions in low light.",
   "version": "0.3.0",
-  "publisher": "YOUR_PUBLISHER_ID",
+  "publisher": "codersilicon",
   "license": "Unlicense",
   "engines": {
-    "vscode": "^1.138.0"
+    "vscode": "^1.136.0"
   },
   "categories": [
     "Themes"
@@ -36,18 +36,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/abyssal.git"
+    "url": "https://github.com/codersilicon/abyssal.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/abyssal/issues"
+    "url": "https://github.com/codersilicon/abyssal/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/abyssal#readme",
-  "main": "./extension.js",
-  "activationEvents": [
-    "onCommand:abyssal.disableModernUi"
-  ],
+  "homepage": "https://github.com/codersilicon/abyssal#readme",
   "scripts": {
-    "vscode:prepublish": "npm run icon && node -e \"require('./extension.js')\"",
+    "vscode:prepublish": "npm run icon",
     "icon": "node tools/resize-icon.js 128",
     "package": "vsce package",
     "lint": "node -e \"JSON.parse(require('fs').readFileSync('package.json')); JSON.parse(require('fs').readFileSync('themes/Abyssal-color-theme.json')); console.log('json ok')\""
@@ -62,16 +58,6 @@
         "uiTheme": "vs-dark",
         "path": "./themes/Abyssal-color-theme.json"
       }
-    ],
-    "commands": [
-      {
-        "command": "abyssal.disableModernUi",
-        "title": "Disable Modern UI (Remove Tab Gaps)",
-        "category": "Abyssal"
-      }
-    ],
-    "configurationDefaults": {
-      "workbench.experimental.modernUI": false
-    }
+    ]
   }
 }

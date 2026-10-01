@@ -3,6 +3,5 @@
   "editor.rulers": [100],
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "workbench.experimental.modernUI": false
+  "files.trimTrailingWhitespace": true
 }

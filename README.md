@@ -29,52 +29,23 @@ code --install-extension abyssal-<version>.vsix
 To reload the theme after editing the JSON while developing, press `Ctrl+Shift+P`
 and run **Developer: Reload Window**.
 
-## Remove the gaps between tabs
+## Layout
 
-VS Code 1.134 turned on an experimental UI restyle ("Modern UI") that turns the
-workbench into floating rounded cards: 4px gaps between editor tabs, rounded
-corners everywhere, a taller status bar, extra margins around side bars. It is the
-main reason VS Code feels bloated and rounder than it used to.
+Abyssal is a color theme and nothing else. It does not contribute any settings, and
+it does not touch `workbench.experimental.modernUI` or any other layout flag, so the
+workbench renders exactly as your VS Code build ships it.
 
-The gaps and corner radii are hardcoded in the workbench stylesheet, so **no color
-theme can remove them**. They come from a separate style-override layer gated
-behind one setting, so the theme ships that switch.
+VS Code 1.134 introduced an experimental UI restyle ("Modern UI") that draws the
+workbench as floating rounded cards: gaps between editor tabs, rounded corners, a
+taller status bar. Those come from a style-override layer above the color theme, and
+the gaps and corner radii are hardcoded in the workbench stylesheet, so **no color
+theme can remove them**.
 
-### Automatic
-
-Abyssal contributes `configurationDefaults` in its manifest:
-
-```json
-"configurationDefaults": {
-  "workbench.experimental.modernUI": false
-}
-```
-
-That overrides the setting's default the moment the extension is installed, so the
-flat layout is already in place before you select the theme. This is a *default*,
-not a hard lock: if you have `workbench.experimental.modernUI: true` written in any
-`settings.json`, yours wins and Modern UI comes back. Delete that line.
-
-### Forced
-
-Modern UI is registered as an experiment (`experiment: { mode: 'auto' }`), which
-means VS Code's A/B rollout service can flip it back on without your consent and
-without the flag appearing in `settings.json`. When that happens, run:
-
-**Command Palette → `Abyssal: Disable Modern UI (Remove Tab Gaps)`**
-
-The command writes `false` to the setting in your *user* settings, which beats the
-rollout. If it finds the flag already `false` and the UI is still rounded, it also
-sets `workbench.enableExperiments: false`, which closes the experiments channel
-entirely. Then reload the window.
-
-### Doing it by hand
-
-Open **Preferences: Open User Settings (JSON)** and add:
+If you want the flat layout, set it yourself in your user `settings.json`:
 
 ```jsonc
 {
-  // Flat, tiling-style tabs. This is the important one.
+  // Flat, tiling-style tabs.
   "workbench.experimental.modernUI": false,
 
   // Optional: keep the tab bar compact and predictable.
@@ -90,22 +61,13 @@ Open **Preferences: Open User Settings (JSON)** and add:
 }
 ```
 
-Last resort, if a future release ignores both switches: patch
-`workbench.desktop.main.css` directly. That breaks on every VS Code update, so it
-is deliberately not automated here.
+Abyssal does not do this for you on purpose. Modern UI is a shipped default that your
+VS Code version and your own settings should decide, not a color theme's manifest. If
+you enable it later, Abyssal's colors still apply unchanged.
 
-### Verify it took effect
-
-With the override off you should see:
-
-- Tab labels flush against each other with hairline separators, no 4px gutters.
-- Square corners on the tab bar, side bar, and panel.
-- A single-line status bar instead of a double-height one.
-- No vertical margin between the side bar and the editor.
-
-If Modern UI is still on, check whether `workbench.experimental.modernUI` reappeared
-in your user `settings.json` after a VS Code update. That is the A/B rollout writing
-itself back in.
+Last resort, if a future release ignores the flag: patch `workbench.desktop.main.css`
+directly. That breaks on every VS Code update, so it is deliberately not automated
+here.
 
 ## Palette
 
@@ -153,7 +115,7 @@ still read correctly rather than disappearing.
 
 ## Requirements
 
-VS Code `^1.138.0` or newer. Runs on Windows, macOS, and Linux; no platform-specific
+VS Code `^1.136.0` or newer. Runs on Windows, macOS, and Linux; no platform-specific
 behavior.
 
 
@@ -174,21 +136,12 @@ Press `F5` to launch an Extension Development Host with the theme applied. Theme
 changes show up immediately in that window; no rebuild step.
 
 The dev host opens this folder, so `.vscode/settings.json` applies inside it too.
-That matters for the tab gaps: `workbench.experimental.modernUI` is `window` scoped,
-so a folder-level value only affects windows that have this folder open. The
-extension's `configurationDefaults` applies everywhere regardless, and the command
-writes to user settings, which is the only scope that survives on your real setup.
 
-### Testing the layout fix in the dev host
+### Testing in the dev host
 
-1. `F5`.
-2. In the new window run `Abyssal: Disable Modern UI (Remove Tab Gaps)`.
-3. `Developer: Reload Window`.
-
-If tabs are still pill-shaped after the reload, the settings write failed and the
-host has no write access to its user settings. Check the Host, Help, About dialog
-for a temporary user data dir; add `"workbench.experimental.modernUI": false` to
-`.vscode/settings.json` instead to isolate the theme from the flag.
+`F5`, then pick **Abyssal** in the theme picker (`Ctrl+K Ctrl+T`). The theme is not
+selected for you: use the picker, or set `"workbench.colorTheme": "Abyssal"` in your
+user settings, to see it.
 
 ### Adding a color
 

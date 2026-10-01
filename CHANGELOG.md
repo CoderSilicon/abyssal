@@ -7,7 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet.
+### Removed
+
+- Dropped the Modern UI override entirely. The `configurationDefaults` contribution
+  for `workbench.experimental.modernUI`, the `Abyssal: Disable Modern UI (Remove Tab
+  Gaps)` command, and `extension.js` are gone. Modern UI is a shipped default that
+  caused more problems than it solved, so the workbench now renders as your VS Code
+  build ships it. See the README's **Layout** section for setting it yourself.
+
+### Fixed
+
+- `engines.vscode` lowered to `^1.136.0`. It was declared as `^1.138.0`, which made
+  the extension unloadable on VS Code 1.136.x, so the theme silently never appeared
+  in the picker and `F5` produced a dev host with no theme.
+- `publisher` set to `codersilicon`; the `@`-prefixed value was invalid and would
+  have been rejected by `vsce`.
+- Replaced the `YOUR_PUBLISHER_ID` / `YOUR_USERNAME` placeholders in the manifest
+  metadata.
 
 ## [0.3.0]
 
@@ -56,7 +72,7 @@ Nothing yet.
   JavaScript, and TypeScript.
 - Extension manifest metadata, Unlicense, and full README with palette reference.
 
-[Unreleased]: https://github.com/YOUR_USERNAME/abyssal/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/YOUR_USERNAME/abyssal/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/YOUR_USERNAME/abyssal/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/YOUR_USERNAME/abyssal/releases/tag/v0.1.0
+[Unreleased]: https://github.com/codersilicon/abyssal/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/codersilicon/abyssal/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/codersilicon/abyssal/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/codersilicon/abyssal/releases/tag/v0.1.0
